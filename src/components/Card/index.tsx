@@ -2,22 +2,14 @@ import React, { useRef } from "react";
 import { Container } from "./styles";
 
 import { useDrag, useDrop } from "react-dnd";
+import { ICard, itemDragging } from "./types";
+import { useDispatch, useSelector } from "react-redux";
+import { cardsMove } from "../../store/Cards/Cards.slice";
+import { RootState } from "../../store/store";
 
-interface ICard {
-  data: {
-    id: number;
-    title: string;
-    content: string;
-  };
-  index: number;
-}
-
-type itemDragging = {
-  type: string;
-  index: number;
-};
-
-export default function Card({ data, index }: ICard) {
+export default function Card({ data, index, listIndex }: ICard) {
+  const lists = useSelector((state: RootState) => state.cards);
+  const dispatch = useDispatch();
   const cardRef = useRef(null);
 
   const [{ isDragging }, dragRef] = useDrag({
@@ -25,6 +17,7 @@ export default function Card({ data, index }: ICard) {
     item: {
       type: "CARD",
       index,
+      listIndex,
     } as itemDragging,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -34,10 +27,12 @@ export default function Card({ data, index }: ICard) {
   const [, dropRef] = useDrop({
     accept: "CARD",
     hover(item: itemDragging, monitor) {
+      const draggedListIndex = item.listIndex;
+      const targetListIndex = listIndex;
       const draggedIndex = item.index;
       const targetIndex = index;
 
-      if (draggedIndex === targetIndex) {
+      if (draggedIndex === targetIndex && draggedListIndex === targetListIndex) {
         return;
       }
 
@@ -45,8 +40,22 @@ export default function Card({ data, index }: ICard) {
       const targetCenter = (targetSize.bottom - targetSize.top) / 2;
       const draggedOffset = monitor.getClientOffset();
       const draggetTop = draggedOffset?.y - targetSize.top;
-      
-      console.log(targetSize);
+
+      if (draggedIndex < targetIndex && draggetTop < targetCenter) return;
+
+      if (draggedIndex > targetIndex && draggetTop > targetCenter) return;
+
+      dispatch(
+        cardsMove({
+          fromList: draggedListIndex,
+          toList: targetListIndex,
+          from: draggedIndex,
+          to: targetIndex,
+        })
+      );
+
+      item.index = targetIndex;
+      item.listIndex = targetListIndex;
     },
   });
 

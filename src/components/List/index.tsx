@@ -6,6 +6,7 @@ import { MdAdd } from "react-icons/md";
 
 interface IList {
   title: string;
+  index: number;
   cards: {
     id: number;
     title: string;
@@ -13,7 +14,7 @@ interface IList {
   }[];
 }
 
-export function List({ title, cards }: IList) {
+export function List({ title, cards, index: listIndex }: IList) {
   return (
     <Container>
       <header>
@@ -23,7 +24,7 @@ export function List({ title, cards }: IList) {
 
       <ul>
         {cards.map((card, index) => (
-          <Card key={card.id} data={card} index={index} />
+          <Card key={card.id} data={card} index={index} listIndex={listIndex} />
         ))}
       </ul>
 

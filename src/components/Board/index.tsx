@@ -2,13 +2,21 @@ import React from "react";
 import { List } from "../List";
 import { Container } from "./styles";
 
-import { data } from "../../mocks/api";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 export default function Board() {
+  const lists = useSelector((state: RootState) => state.cards);
+
   return (
     <Container>
-      {data.map((list) => (
-        <List key={list.title} title={list.title} cards={list.cards} />
+      {lists.map((list, index) => (
+        <List
+          key={list.title}
+          title={list.title}
+          cards={list.cards}
+          index={index}
+        />
       ))}
     </Container>
   );
