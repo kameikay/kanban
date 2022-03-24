@@ -30,13 +30,13 @@ export const Container = styled.div<IContainer>`
   ${({ isDragging }) =>
     isDragging &&
     css`
-      border: 2px dashed rgba(0, 0, 0, 0.2);
-      background: transparent;
+      border: none;
+      background: #00000014;
       cursor: grabbing;
       box-shadow: none;
       
       a {
-        color: #6b778c;
+        color: transparent;
       }
     `}
 `;

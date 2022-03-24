@@ -10,19 +10,35 @@ export const Container = styled.div`
 
   header {
     margin-bottom: 1rem;
-    h2 {
+
+    input {
+      padding: 4px;
+      width: 100%;
       font-size: 1rem;
+      cursor: pointer;
+      display: block;
+      background-color: transparent;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+
+      &:focus {
+        box-shadow: inset 0 0 0 2px #0079bf;
+        background-color: #fff;
+      }
     }
 
     small {
       font-size: 14px;
       color: #5e6c84;
+      padding: 0 4px;
+
     }
   }
 
   > button {
     width: 100%;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     color: #6b778c;
     display: flex;
     align-items: center;

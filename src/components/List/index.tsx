@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "../Card";
 import { Container } from "./styled";
 
 import { MdAdd } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { listRename } from "../../store/Cards/Cards.slice";
+import { RootState } from "../../store/store";
 
 interface IList {
   title: string;
@@ -15,10 +18,25 @@ interface IList {
 }
 
 export function List({ title, cards, index: listIndex }: IList) {
+  const dispatch = useDispatch();
+  const [newTitle, setNewTitle] = useState(title);
+
+  function handleNewTitle(event: React.ChangeEvent<HTMLInputElement>) {
+    setNewTitle(event.target.value);
+  }
+
   return (
     <Container>
       <header>
-        <h2>{title}</h2>
+        <input
+          onChange={handleNewTitle}
+          onBlur={() => {
+            dispatch(listRename({ title, newTitle }));
+          }}
+          value={newTitle}
+          onFocus={(event) => event.target.select()}
+        />
+
         <small>{cards.length} cartões</small>
       </header>
 

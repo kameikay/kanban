@@ -3,12 +3,10 @@ import { Container } from "./styles";
 
 import { useDrag, useDrop } from "react-dnd";
 import { ICard, itemDragging } from "./types";
-import { useDispatch, useSelector } from "react-redux";
-import { cardsMove } from "../../store/Cards/Cards.slice";
-import { RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { cardsMove, cardsRename } from "../../store/Cards/Cards.slice";
 
 export default function Card({ data, index, listIndex }: ICard) {
-  const lists = useSelector((state: RootState) => state.cards);
   const dispatch = useDispatch();
   const cardRef = useRef(null);
 
@@ -32,13 +30,18 @@ export default function Card({ data, index, listIndex }: ICard) {
       const draggedIndex = item.index;
       const targetIndex = index;
 
-      if (draggedIndex === targetIndex && draggedListIndex === targetListIndex) {
+      if (
+        draggedIndex === targetIndex &&
+        draggedListIndex === targetListIndex
+      ) {
         return;
       }
 
+      //@ts-ignore
       const targetSize = cardRef?.current.getBoundingClientRect();
       const targetCenter = (targetSize.bottom - targetSize.top) / 2;
       const draggedOffset = monitor.getClientOffset();
+      //@ts-ignore
       const draggetTop = draggedOffset?.y - targetSize.top;
 
       if (draggedIndex < targetIndex && draggetTop < targetCenter) return;
@@ -63,7 +66,14 @@ export default function Card({ data, index, listIndex }: ICard) {
 
   return (
     <Container ref={cardRef} isDragging={isDragging}>
-      <a href="#">{data.title}</a>
+      <a
+        href="#"
+        onClick={() =>
+          dispatch(cardsRename({ title: data.title, newTitle: "teste" }))
+        }
+      >
+        {data.title}
+      </a>
     </Container>
   );
 }
