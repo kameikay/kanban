@@ -1,5 +1,5 @@
+import { darken } from "polished";
 import styled, { css } from "styled-components";
-
 
 export const Container = styled.div`
   background-color: #ebecf0;
@@ -55,6 +55,58 @@ export const Container = styled.div`
     &:hover {
       color: #172b4d;
       background-color: #00000014;
+    }
+  }
+
+  .editing {
+    textarea {
+      width: 100%;
+      min-height: 3rem;
+      font-size: 14px;
+      padding: 6px 8px 2px;
+      resize: none;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+      overflow-wrap: break-word;
+      box-shadow: 0 1px 0 #091e4240;
+      &:focus {
+        color: #172b4d;
+      }
+    }
+
+    .editing-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 0.5rem;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+      }
+
+      .add-card {
+        color: #fff;
+        background-color: #0079bf;
+
+        &:hover {
+          background-color: ${darken(0.1, "#0079bf")};
+        }
+      }
+
+      .close-editing {
+        color: #5e6c84;
+
+        &:hover {
+          color: #172b4d;
+        }
+      }
     }
   }
 `;

@@ -14,6 +14,7 @@ const listsSlice = createSlice({
           : { ...list }
       ));
     },
+  
   },
 });
 

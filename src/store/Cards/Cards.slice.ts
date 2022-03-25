@@ -62,10 +62,40 @@ const cardsSlice = createSlice({
         return { ...list, cards: list.cards.filter((card) => card.id !== id) };
       }));
     },
+
+    addNewCardToList(state, { payload }) {
+      const { listIndex, newTitleCard } = payload;
+      const idSequence = data
+        .map((list) => list.cards.length)
+        .reduce(
+          (previousValue, currentValue) => previousValue + currentValue,
+          0
+        );
+
+      return (state = state.map((list) => {
+        if (state.indexOf(list) === listIndex) {
+          return {
+            ...list,
+            cards: [
+              ...list.cards,
+              {
+                id: idSequence + 1,
+                title: newTitleCard,
+                content: "",
+              },
+            ],
+          };
+        } else {
+          return {
+            ...list,
+          };
+        }
+      }));
+    },
   },
 });
 
-export const { cardsMove, cardsRename, cardsDescriptionChange, deleteCard } =
+export const { cardsMove, cardsRename, cardsDescriptionChange, deleteCard, addNewCardToList } =
   cardsSlice.actions;
 
 export default cardsSlice.reducer;

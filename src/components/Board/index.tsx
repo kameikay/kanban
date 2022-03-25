@@ -14,8 +14,8 @@ export default function Board() {
         <List
           key={list.title}
           title={list.title}
-          cards={list.cards}
           index={index}
+          cards={list.cards}
         />
       ))}
     </Container>

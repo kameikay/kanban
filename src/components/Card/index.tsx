@@ -3,14 +3,16 @@ import { Container } from "./styles";
 
 import { useDrag, useDrop } from "react-dnd";
 import { ICard, itemDragging } from "./types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cardsMove } from "../../store/Cards/Cards.slice";
 import { CardModal } from "../CardModal";
+import { RootState } from "../../store/store";
 
 export default function Card({ data, index, listIndex }: ICard) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const cardRef = useRef(null);
+
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const [{ isDragging }, dragRef] = useDrag({
     type: "CARD",
