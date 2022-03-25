@@ -35,6 +35,7 @@ export function List({ cards, title, index: listIndex }: IList) {
       addNewCardToList({ listIndex: listIndex, newTitleCard: newTitleCard })
     );
     setIsEditing(false);
+    setNewTitleCard('');
   }
 
   return (

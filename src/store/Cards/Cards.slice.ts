@@ -92,10 +92,22 @@ const cardsSlice = createSlice({
         }
       }));
     },
+
+    listAdd(state, { payload }) {
+      const { title } = payload;
+      const newList = {
+        title,
+        cards: [],
+      };
+
+      return state = [...state, {
+        ...newList,
+      }];
+    },
   },
 });
 
-export const { cardsMove, cardsRename, cardsDescriptionChange, deleteCard, addNewCardToList } =
+export const { cardsMove, cardsRename, cardsDescriptionChange, deleteCard, addNewCardToList, listAdd } =
   cardsSlice.actions;
 
 export default cardsSlice.reducer;
