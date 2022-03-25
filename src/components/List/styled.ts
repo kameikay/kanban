@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
 
 export const Container = styled.div`
   background-color: #ebecf0;
@@ -32,7 +33,6 @@ export const Container = styled.div`
       font-size: 14px;
       color: #5e6c84;
       padding: 0 4px;
-
     }
   }
 

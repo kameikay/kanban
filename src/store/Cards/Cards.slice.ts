@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { data } from "../../mocks/api";
-const listsSlice = createSlice({
+
+const cardsSlice = createSlice({
   name: "cards",
   initialState: data,
   reducers: {
@@ -12,18 +13,9 @@ const listsSlice = createSlice({
       state[fromList].cards.splice(from, 1);
       state[toList].cards.splice(to, 0, dragged);
     },
-    listRename(state, { payload }) {
-      const { title, newTitle } = payload;
 
-      return (state = state.map((list) =>
-        list.title === title
-          ? { title: newTitle, cards: [...list.cards] }
-          : { ...list }
-      ));
-    },
     cardsRename(state, action) {
       const { title, newTitle } = action.payload;
-      const listTitle = state.find((list) => list.title === title);
 
       return (state = state.map((list) => {
         return {
@@ -42,9 +34,31 @@ const listsSlice = createSlice({
         };
       }));
     },
+
+    cardsDescriptionChange(state, { payload }) {
+      const { oldDescription, newDescription } = payload;
+
+      return (state = state.map((list) => {
+        return {
+          ...list,
+          cards: list.cards.map((card) => {
+            if (card.content === oldDescription) {
+              return {
+                id: card.id,
+                title: card.title,
+                content: newDescription,
+              };
+            } else {
+              return { ...card };
+            }
+          }),
+        };
+      }));
+    },
   },
 });
 
-export const { cardsMove, cardsRename, listRename } = listsSlice.actions;
+export const { cardsMove, cardsRename, cardsDescriptionChange } =
+  cardsSlice.actions;
 
-export default listsSlice.reducer;
+export default cardsSlice.reducer;

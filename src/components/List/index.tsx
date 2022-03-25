@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Card from "../Card";
 import { Container } from "./styled";
 
 import { MdAdd } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { listRename } from "../../store/Cards/Cards.slice";
-import { RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { listRename } from "../../store/Lists/Lists.slice";
 
 interface IList {
   title: string;
@@ -20,7 +19,6 @@ interface IList {
 export function List({ title, cards, index: listIndex }: IList) {
   const dispatch = useDispatch();
   const [newTitle, setNewTitle] = useState(title);
-
   function handleNewTitle(event: React.ChangeEvent<HTMLInputElement>) {
     setNewTitle(event.target.value);
   }
@@ -41,9 +39,10 @@ export function List({ title, cards, index: listIndex }: IList) {
       </header>
 
       <ul>
-        {cards.map((card, index) => (
-          <Card key={card.id} data={card} index={index} listIndex={listIndex} />
-        ))}
+        {cards.length > 0 &&
+          cards.map((card, index) => (
+            <Card key={index} data={card} index={index} listIndex={listIndex} />
+          ))}
       </ul>
 
       <button>

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
 export default function Board() {
-  const lists = useSelector((state: RootState) => state.lists);
+  const lists = useSelector((state: RootState) => state.cards);
   
   return (
     <Container>

@@ -1,12 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Container } from "./styles";
 
 import { useDrag, useDrop } from "react-dnd";
 import { ICard, itemDragging } from "./types";
 import { useDispatch } from "react-redux";
-import { cardsMove, cardsRename } from "../../store/Cards/Cards.slice";
+import { cardsMove } from "../../store/Cards/Cards.slice";
+import { CardModal } from "../CardModal";
 
 export default function Card({ data, index, listIndex }: ICard) {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const cardRef = useRef(null);
 
@@ -30,12 +32,8 @@ export default function Card({ data, index, listIndex }: ICard) {
       const draggedIndex = item.index;
       const targetIndex = index;
 
-      if (
-        draggedIndex === targetIndex &&
-        draggedListIndex === targetListIndex
-      ) {
+      if (draggedIndex === targetIndex && draggedListIndex === targetListIndex)
         return;
-      }
 
       //@ts-ignore
       const targetSize = cardRef?.current.getBoundingClientRect();
@@ -45,7 +43,6 @@ export default function Card({ data, index, listIndex }: ICard) {
       const draggetTop = draggedOffset?.y - targetSize.top;
 
       if (draggedIndex < targetIndex && draggetTop < targetCenter) return;
-
       if (draggedIndex > targetIndex && draggetTop > targetCenter) return;
 
       dispatch(
@@ -66,12 +63,18 @@ export default function Card({ data, index, listIndex }: ICard) {
 
   return (
     <Container ref={cardRef} isDragging={isDragging}>
-      <a
-        href="#"
-        onClick={() =>
-          dispatch(cardsRename({ title: data.title, newTitle: "teste" }))
-        }
-      >
+      {isModalOpen && (
+        <CardModal
+          setIsModalOpen={setIsModalOpen}
+          data={{
+            title: data.title,
+            id: data.id,
+            content: data.content,
+            listIndex,
+          }}
+        />
+      )}
+      <a href="#" onClick={() => setIsModalOpen(true)}>
         {data.title}
       </a>
     </Container>

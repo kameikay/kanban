@@ -1,14 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import listsReducer from "./Cards/Cards.slice";
+import cardsReducer from "./Cards/Cards.slice";
+import listsReducer from "./Lists/Lists.slice";
 
 const store = configureStore({
   reducer: {
     lists: listsReducer,
+    cards: cardsReducer,
   },
 });
 
 export default store;
 
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
