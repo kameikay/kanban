@@ -55,10 +55,17 @@ const cardsSlice = createSlice({
         };
       }));
     },
+
+    deleteCard(state, { payload }) {
+      const { id } = payload;
+      return (state = state.map((list) => {
+        return { ...list, cards: list.cards.filter((card) => card.id !== id) };
+      }));
+    },
   },
 });
 
-export const { cardsMove, cardsRename, cardsDescriptionChange } =
+export const { cardsMove, cardsRename, cardsDescriptionChange, deleteCard } =
   cardsSlice.actions;
 
 export default cardsSlice.reducer;

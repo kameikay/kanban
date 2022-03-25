@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   cardsDescriptionChange,
   cardsRename,
+  deleteCard,
 } from "../../store/Cards/Cards.slice";
 import { RootState } from "../../store/store";
 import { Container, Overlay } from "./styles";
@@ -42,6 +43,11 @@ export function CardModal({ setIsModalOpen, data }: ICardModal) {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) {
     setDescription(event.target.value);
+  }
+
+  function handleDeleteCard(id: number) {
+    dispatch(deleteCard({ id }));
+    setIsModalOpen(false);
   }
 
   return ReactDOM.createPortal(
@@ -107,7 +113,10 @@ export function CardModal({ setIsModalOpen, data }: ICardModal) {
           >
             Salvar
           </button>
-          <button className="delete modal-btn">
+          <button
+            className="delete modal-btn"
+            onClick={() => handleDeleteCard(data.id)}
+          >
             <MdOutlineDeleteOutline />
             Excluir
           </button>
