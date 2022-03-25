@@ -59,17 +59,17 @@ export const Container = styled.div`
   }
 
   .editing {
-    textarea {
+    input {
       width: 100%;
-      min-height: 3rem;
       font-size: 14px;
-      padding: 6px 8px 2px;
+      padding: 6px 8px;
       resize: none;
       border: none;
       border-radius: 4px;
       outline: none;
       overflow-wrap: break-word;
       box-shadow: 0 1px 0 #091e4240;
+
       &:focus {
         color: #172b4d;
       }

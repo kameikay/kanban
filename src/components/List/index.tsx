@@ -35,7 +35,7 @@ export function List({ cards, title, index: listIndex }: IList) {
       addNewCardToList({ listIndex: listIndex, newTitleCard: newTitleCard })
     );
     setIsEditing(false);
-    setNewTitleCard('');
+    setNewTitleCard("");
   }
 
   return (
@@ -62,12 +62,12 @@ export function List({ cards, title, index: listIndex }: IList) {
 
       {isEditing && (
         <div className="editing">
-          <textarea
+          <input
             name="new-card"
             id="new-card"
             placeholder="Insira um título para este cartão..."
             value={newTitleCard}
-            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setNewTitleCard(event.target.value)
             }
           />

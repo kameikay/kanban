@@ -30,7 +30,7 @@ type DataType = {
 };
 
 export function CardModal({ setIsModalOpen, data }: ICardModal) {
-  const list = useSelector((state: RootState) => state.lists[data.listIndex]);
+  const list = useSelector((state: RootState) => state.cards[data.listIndex]);
   const dispatch = useDispatch();
   const [description, setDescription] = useState<string>(data.content);
   const [newTitle, setNewTitle] = useState(data.title);
